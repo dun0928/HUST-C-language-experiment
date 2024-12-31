@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include<ctype.h>
+int main(){
+    int a[100];
+    char ch;
+    int i=0;
+    int flag=0;
+    while((ch=getchar())!='\n'&&ch!=EOF){
+        if(isdigit(ch)){
+            ungetc(ch,stdin);
+            scanf("%d",&a[i]);
+            i++;
+        }
+        else if(ch==' '){
+            continue;
+        }
+        else if(ch=='+'){
+            a[i-2]=a[i-1]+a[i-2];
+            i--;
+        }
+        else if(ch=='-'){
+            if(isdigit(ch=getchar())){
+                ungetc(ch,stdin);
+                scanf("%d",&a[i]);
+                a[i]=-a[i];
+                i++;
+                continue; 
+            }
+            a[i-2]=a[i-2]-a[i-1];
+            i--;
+        }
+        else if(ch=='*'){
+            a[i-2]=a[i-2]*a[i-1];
+            i--;
+        }
+        else if(ch=='/'){
+            a[i-2]=a[i-2]/a[i-1];
+            i--;
+        }
+    }
+    printf("%d\n",a[0]);
+}
