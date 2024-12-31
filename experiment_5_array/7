@@ -1,0 +1,70 @@
+
+#include<stdio.h>
+#include<string.h>
+void function1(char student[][100],int grades[],int number);
+void function2(char student[][100],int grades[],int number);
+void print_students(char student[][100], int grades[], int number);
+void swap(char a[],char b[]);
+int main(){
+    int n;
+    // scanf("%d",&n);
+    int number=0;
+    char student[100][100];
+    int grades[100];
+    while(1){
+       scanf("%d",&n);
+        switch(n){
+            case 0:
+              return 0;
+            case 1:
+                scanf("%d",&number);
+                function1(student,grades,number);
+                break;
+            case 2:
+              function2(student,grades,number);              
+              break;
+
+            case 3:
+                print_students(student,grades,number);
+                break;
+        }
+    }
+
+
+}
+void function1(char student[][100],int grades[],int number){
+    for(int i=0;i<number;i++){
+        scanf("%s",student[i]);
+        scanf("%d",&grades[i]);
+       // getchar();
+    }
+}
+void function2(char student[][100],int grades[],int number){
+    //int flag=0;
+    for(int j=0;j<number-1;j++){
+        for(int m=0;m<number-1-j;m++){
+            if(grades[m]<grades[m+1] || (grades[m] == grades[m + 1] && strcmp(student[m], student[m + 1]) > 0)){
+                int tempp;
+                tempp=grades[m];
+                grades[m]=grades[m+1];
+                grades[m+1]=tempp;
+                swap(student[m],student[m+1]);
+                //flag=1;
+            }
+            // if (flag==0){
+            //     break;
+            // }
+        }
+    }
+}
+void print_students(char student[][100], int grades[], int number) {
+    for (int i = 0; i < number; i++) {
+        printf("%s %d\n", student[i], grades[i]);
+    }
+}
+void swap(char a[],char b[]){
+    char temp[100];
+    strcpy(temp,a);
+    strcpy(a,b);
+    strcpy(b,temp);
+}
