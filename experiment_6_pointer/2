@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/* 对指针数组s指向的size个字符串进行升序排序 */
+void strsort(char *s[], int size) {
+    char *temp;
+    int i, j;
+    for (i = 0; i < size - 1; i++)
+        for (j = 0; j < size - i - 1; j++)
+            if (strcmp(s[j], s[j + 1]) > 0) { // 使用strcmp进行字符串比较，更安全
+                temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+}
+
+int main() {
+    int i;
+    int N;
+    scanf("%d", &N);
+    getchar(); // 吸收换行符
+    char *s[N];
+    char t[50];
+    for (i = 0; i < N; i++) {
+        fgets(t, sizeof(t), stdin); // 使用fgets代替gets
+        t[strcspn(t, "\n")] = 0; // 去除fgets读取的换行符
+        s[i] = (char *)malloc(strlen(t) + 1);
+        if (s[i] == NULL) { // 检查内存分配是否成功
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(1); // 如果内存分配失败，退出程序
+        }
+        strcpy(s[i], t);
+    }
+    strsort(s, N);
+    for (i = 0; i < N; i++) {
+        puts(s[i]);
+        free(s[i]); // 释放动态分配的内存
+    }
+
+    return 0;
+}
