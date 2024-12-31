@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int indexx=0;
+void bubble_sort(int *a,int count);
+int main(int argc, char const *argv[]) {
+    int a[100];
+    int count = atoi(argv[1]);
+    for(int i=0;i<count;i++){
+        scanf("%d",&a[i]);
+    }
+    if (argc == 3){
+        indexx=1;
+    }
+    bubble_sort(a,count);
+    for(int i=0;i<count;i++){
+        printf("%d ",a[i]);
+    }
+    return 0;
+}
+void bubble_sort(int *a,int count){
+    int temp;
+    int flag=0;
+    if(indexx==1){
+    for(int i=0;i<count-1;i++){
+        for(int j=0;j<count-1-i;j++){
+            if(a[j]<a[j+1]){
+                temp=a[j];
+                a[j]=a[j+1];
+                a[j+1]=temp;
+                flag=1;
+            }
+        }
+        if(flag==0){
+            break;
+        }
+        flag=0;
+    }
+    }
+    else{
+        for(int i=0;i<count-1;i++){
+        for(int j=0;j<count-1-i;j++){
+            if(a[j]>a[j+1]){
+                temp=a[j];
+                a[j]=a[j+1];
+                a[j+1]=temp;
+                flag=1;
+            }
+        }
+        if(flag==0){
+            break;
+        }
+        flag=0;
+    }
+
+    }
+}
