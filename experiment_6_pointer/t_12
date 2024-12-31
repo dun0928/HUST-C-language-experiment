@@ -1,0 +1,19 @@
+#include<stdio.h>
+int main(){
+    int i;
+    scanf("%d",&i);
+    int num[100]={0};
+    int n=0;
+    int k=0;
+    while(i>9){
+        num[k]=i%10;
+        i=i/10;
+        k++;
+    }
+    num[k]=i;
+    for(;k>=0;k--){
+        printf("task%d is called!\n",num[k]);
+    }
+    return 0;
+
+}
