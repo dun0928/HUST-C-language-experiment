@@ -1,0 +1,34 @@
+#include<stdio.h>
+int main(void)
+{
+    int m,n;
+    scanf("%d",&m);
+    scanf("%d",&n);
+
+    int a[500000] = {0};
+    int b[500000] = {0};
+    int i, j, k;
+    for (i = 0; i<m; i++)
+        a[i] = i + 1;
+    for (i = 0, j = 0; i<m-1; i++){
+        for (k = 1; k<=n; k++){
+             j=(j+1)%m;
+            while(a[j]==0){
+                j=(j+1)%m;
+            }
+
+        }
+        b[i] = a[j];
+        a[j]=0;
+
+    }
+    // for (i = 0; i<m - 1; i++)
+    //     printf("%6d", b[i]);
+    for(i=0; i<m; i++){
+        if(a[i]!= 0){
+            printf("%d", a[i]-1);
+            break;
+        }
+    }
+    return 0;
+}
