@@ -1,0 +1,127 @@
+#include <stdio.h>
+#include <string.h>
+
+
+void input_students(char student[][100], int grades[], int number);
+void sort_students(char student[][100], int grades[], int number);
+void print_students(char student[][100], int grades[], int number);
+void swap(char a[], char b[]);
+void find(char student[][100], int grades[], int number, int grade);
+
+int main() {
+    char student[100][100];
+    int grades[100];
+    int number = 0;
+    int choice;
+    int grade;
+
+    while (1) {
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 0:
+                return 0;
+            case 1:
+                scanf("%d", &number);
+                input_students(student, grades, number);
+                break;
+            case 2:
+                sort_students(student, grades, number);
+                break;
+            case 3:
+                print_students(student, grades, number);
+                break;
+            case 4:
+
+                scanf("%d", &grade);
+                find(student,grades, number, grade);
+        }
+    }
+
+}
+
+void input_students(char student[][100], int grades[], int number) {
+    
+    for (int i = 0; i < number; i++) {
+        scanf("%s", student[i]);
+        scanf("%d", &grades[i]);
+    }
+}
+
+void sort_students(char student[][100], int grades[], int number) {
+    int j;
+    for (int i = 0; i < number - 1; i++) {
+        for ( j = 0; j < number - 1 - i; j++) {
+            if (grades[j] < grades[j + 1] ) {
+                int tempp;
+                tempp = grades[j];
+                grades[j] = grades[j + 1];
+                grades[j + 1] = tempp;
+                swap(student[j], student[j + 1]);
+                
+            }
+           
+        }
+    }
+    for(j=0;j<number-1;j++){
+         if(grades[j]==grades[j+1]&&student[j][0]>student[j+1][0]){
+                    swap(student[j], student[j + 1]);
+            }
+            if (grades[j]==grades[j+1]&&student[j][0]==student[j+1][0]&&student[j][1]>student[j+1][1]){
+                    swap(student[j], student[j + 1]);
+            }
+    }
+}
+
+void print_students(char student[][100], int grades[], int number) {
+    //printf("排序后的学生姓名和成绩：\n");
+    for (int i = 0; i < number; i++) {
+        printf("%s: %d\n", student[i], grades[i]);
+    }
+}
+
+void swap(char a[], char b[]) {
+    char temp[100];
+    strcpy(temp, a);
+    strcpy(a, b);
+    strcpy(b, temp);
+}
+void find (char student[][100], int grades[], int number, int grade) {
+        int k;
+        for(k=(number+1)/2;k>0&&k<number;){
+            int flag=k;
+            if(grades[k-1]==grade){
+                
+                printf("%s %d\n", student[k-1],grade);
+                for(k=flag-1;k>=0;k--){
+                    if(grades[k-1]==grade){
+                        printf("%s %d\n", student[k-1],grade);
+                    }
+                    else{
+                        break;
+                    }
+                }
+                for(k=flag+1;k<number;k++){
+                    if(grades[k-1]==grade){
+                        printf("%s %d\n", student[k-1],grade);
+                    }
+                    else{
+                        break;
+                    }
+                }
+                return ;
+            }
+            else if(grade<grades[k-1]){
+                k=(k+1)/2;
+            }
+            else if(grade>grades[k-1]){
+                k=(number+k)/2;
+            }
+
+            if(k==flag){
+                printf("not found");
+                return ;
+
+            }
+        }
+}
