@@ -1,164 +1,40 @@
-
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
 #include<string.h>
-typedef struct stu{
-    char id_card[15];
-    char name[10];
-    int grades_english;
-    int grades_math;
-    int grades_physics;
-    int grades_c;
-    double average;
-    struct stu *next;
-} student; 
-void input(student **head,student **tail);
-void output(student *head);
-void modify(student *head);
-void average(student *head);
-void print(student *head);
-void bubble_sort(student **head);
 int main(){
-    int choice;
-    scanf("%d",&choice);
-    student *head=NULL;
-    student *tail=NULL;
-    while(choice!=0){
-        switch (choice){
-            case 0:
-                return 0;
-            case 1:
-                input(&head,&tail);
-                break;
-            case 2:
-                output(head);
-                break;
-            case 3:
-                modify(head);
-                break;
-            case 4:
-                average(head);
-                break;
-            case 5:
-                print(head);
-                break;
-        }
-        scanf("%d",&choice);
+    int m,n;
+    FILE *fp;
+    char b[100];
+    scanf("%s",b);
+    if(strcmp(b,"matrix1.in")==0){
+        fp=fopen("matrix1.in","r");
     }
-}
-void input(student **head,student **tail){
-    int number;
-    scanf("%d",&number);
-    for(int i=0;i<number;i++){
-        student *p=(student *)malloc(sizeof(student));
-        p->next=NULL;
-        scanf("%s",p->id_card);
-        scanf("%s",p->name);
-        scanf("%d",&p->grades_english);
-        scanf("%d",&p->grades_math);
-        scanf("%d",&p->grades_physics);
-        scanf("%d",&p->grades_c);
-        p->average=(p->grades_english+p->grades_math+p->grades_physics+p->grades_c)/4.0;
-        if(*head==NULL){
-            *head=p;
-            *tail=p;
-        }else{
-            (*tail)->next=p;
-            *tail=p;
+    else if(strcmp(b,"matrix2.in")==0){
+        fp=fopen("matrix2.in","r");
+    }
+    else if(strcmp(b,"matrix3.in")==0){
+        fp=fopen("matrix3.in","r");
+    }
+    
+    fscanf(fp,"%d",&n);
+    fscanf(fp,"%d",&m);
+    int a[n][m];
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            fscanf(fp,"%d",&a[i][j]);
         }
     }
-    bubble_sort(head);
-}
-void output(student *head){
-    while(head!=NULL){
-        printf("%s %s %d %d %d %d\n",head->id_card,head->name,head->grades_english,head->grades_math,head->grades_physics,head->grades_c);
-        head=head->next;
-    }
-}
-void modify(student *head){
-    char card[15];
-    scanf("%s",card);
-    while(head!=NULL){
-        if(strcmp(head->id_card,card)==0){
-            int choice;
-            scanf("%d",&choice);
-            switch (choice){
-                case 1:
-                    scanf("%d",&head->grades_english);
-                    head->average=(head->grades_english+head->grades_math+head->grades_physics+head->grades_c)/4.0;
-                    return;
-                    break;
-                case 2:
-                    scanf("%d",&head->grades_math);
-                    head->average=(head->grades_english+head->grades_math+head->grades_physics+head->grades_c)/4.0;
-                    return;
-                    break;
-                case 3:
-                    scanf("%d",&head->grades_physics);
-                    head->average=(head->grades_english+head->grades_math+head->grades_physics+head->grades_c)/4.0;
-                    return;
-                    break;
-                case 4:
-                    scanf("%d",&head->grades_c);
-                    head->average=(head->grades_english+head->grades_math+head->grades_physics+head->grades_c)/4.0;
-                    return ;
-                    break;
+    fclose(fp);
+    fp=fopen("matrix.out","w");
+    for(int j=m-1;j>=0;j--){
+        for(int i=0;i<n;i++){
+            if(i!=n-1){
+                fprintf(fp,"%d ",a[i][j]);
             }
-            
-        }
-        else{
-            head=head->next;
-        }
-    }
-}
-void average(student *head){
-    while(head!=NULL){
-        printf("%s %s %.2f\n",head->id_card,head->name,head->average);
-        head=head->next;
-    }
-}
-void print(student *head){
-    int sum;
-    while(head!=NULL){
-        sum=head->grades_english+head->grades_math+head->grades_physics+head->grades_c;
-        printf("%s %s %d %.2f\n",head->id_card,head->name,sum,head->average);
-        head=head->next;
-    }
-}
-void bubble_sort(student **head){
-    student *start=*head;
-    student *start1=*head;
-    for(;(start->next)!=NULL;){
-        for(;(start1->next)!=NULL;){
-            if(start1->average>start1->next->average){
-                char temp[15];
-                char name[10];
-                strcpy(temp,start1->id_card);
-                strcpy(name,start1->name);
-                int grades_english=start1->grades_english;
-                int grades_math=start1->grades_math;
-                int grades_physics=start1->grades_physics;
-                int grades_c=start1->grades_c;
-                double average=start1->average;
-                strcpy(start1->id_card,start1->next->id_card);
-                strcpy(start1->name,start1->next->name);
-                start1->grades_english=start1->next->grades_english;
-                start1->grades_math=start1->next->grades_math;
-                start1->grades_physics=start1->next->grades_physics;
-                start1->grades_c=start1->next->grades_c;
-                start1->average=start1->next->average;
-                strcpy(start1->next->id_card,temp);
-                strcpy(start1->next->name,name);
-                start1->next->grades_english=grades_english;
-                start1->next->grades_math=grades_math;
-                start1->next->grades_physics=grades_physics;
-                start1->next->grades_c=grades_c;
-                start1->next->average=average;
+            else{
+                fprintf(fp,"%d\n",a[i][j]);
             }
-            start1=start1->next;
         }
-        start=start->next;
-        start1=*head;
     }
-
+    fclose(fp);
+    return 0;
 }
