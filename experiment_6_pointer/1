@@ -1,0 +1,23 @@
+#include<stdio.h>
+void strcopy(char *t,const char *s);
+int main(){
+    char s[100]={0};
+    char t[100]={0};
+    int i=0;
+    while((s[i]=getchar())!=EOF){
+        i++;
+    }
+    s[i]='\0';
+    strcopy(t,s);
+    printf("%s",t);
+    return 0;
+}
+void strcopy(char *t,const char *s){
+    int k=0;
+    while(*(s+k)!='\0'){
+        *(t+k)=*(s+k);
+        k++;
+    }
+    *(t+k)='\0';
+
+}
