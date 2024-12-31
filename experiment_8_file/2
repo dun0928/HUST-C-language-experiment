@@ -1,42 +1,33 @@
-#include <stdio.h>
-#include <stdlib.h>
-struct s_list{
-    int data;
-    struct s_list *next;
-};
-void create_list(struct s_list **headp);
-int main(void){
-    struct s_list *head=NULL;
-    create_list(&head);
-    struct s_list *p=NULL;
-    p=head;
-    while (p){
-        printf("%d\t",p->data);
-        p=p->next;
-    }
-    printf("\n");
-    return 0;  
-}
-void create_list(struct s_list **headp){
-
-    struct s_list *loc_head=NULL,*tail;
-    int p;
-    scanf("%d",&p);
-    if(p==0);
-    else {
-        loc_head=(struct s_list *)malloc(sizeof(struct s_list));
-        loc_head->data=p;
-        tail=loc_head;
-        scanf("%d",&p);
-        while (p!=0)
-        {  
-            tail->next=(struct s_list *)malloc(sizeof(struct s_list));
-            tail=tail->next;
-            tail->data=p;
-            scanf("%d",&p);
-        }
-        tail->next=NULL;
-        
-    }
-    *headp=loc_head;
+#include<stdio.h>
+#include<stdlib.h>
+int main(int argc, char* argv[])
+{
+	FILE * fp;
+	if(argc!=3){
+		printf("Arguments error!\n");
+		exit(-1);
+	}
+	if((fp=fopen(argv[1],"r"))==NULL){      /* fp指向filename */
+		printf("Can't open %s file!\n", argv[1]);
+		exit(-1);
+	}
+    char re[100];
+    int number_line=1;
+	while((fgets(re,sizeof(re),fp))!=NULL){            
+		  printf("%d %s",number_line,re);  
+          number_line++;
+          if(number_line==6){
+            //   char a;
+            //   a=getchar();
+            //   if(a){
+            //       continue;
+            //       number_line=1;
+            //   }else{
+            //       return 0;
+            //   }
+            ;
+          }
+    }      /* 向显示器中写从filename中读取的字符 */ 
+	fclose(fp);                        /* 关闭filename */ 
+	return 0;
 }
