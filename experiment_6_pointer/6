@@ -1,0 +1,12 @@
+#include <stdio.h>
+int main(){
+    int mask=0xf;
+    int a;
+    scanf("%d",&a);
+    for(int i=0;i<8;i++){
+        int b=a&(mask<<(28-4*i));
+        printf("%x ",b>>(28-4*i));
+        
+    }
+    return 0;
+}
