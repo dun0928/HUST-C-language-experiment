@@ -1,67 +1,36 @@
 #include<stdio.h>
-struct bits {
-    int num;
-    int bit[8];
-};
-void bit0(int b);
-void bit1(int b);
-void bit2(int b);
-void bit3(int b);
-void bit4(int b);
-void bit5(int b);
-void bit6(int b);
-void bit7(int b);
-void (*p_fun[8])(int)={bit0,bit1,bit2,bit3,bit4,bit5,bit6,bit7};
+#include<stdint.h>
+void two_write(float number[],int size);
+void print_float_binary(float num);
 int main(){
-    int a=0x1;
-    struct bits b;
-    scanf("%d",&b.num);
-    for(int i=0;i<8;i++){
-        b.bit[i]=b.num&a;
-        b.num=b.num>>1;
+    float number[10];
+    for(int i=0;i<10;i++){
+        scanf("%f",&number[i]);
     }
-    for(int i=0;i<8;i++){
-        p_fun[i](b.bit[i]);
-    }
+    two_write(number,10);
     return 0;
 }
-void bit0(int b){
-    if (b==1){
-        printf("the function 0 is called!\n");
+void two_write(float number[],int size){
+    FILE *fp;
+    fp=fopen("float.dat","wb");
+    if(fp!=NULL){
+        fwrite(number,8,10,fp);
     }
+    fclose(fp);
+    fp=fopen("float.dat","rb");
+    fread(number,8,10,fp);
+    for(int i=0;i<10;i++){
+        print_float_binary(number[i]);
+    }
+
+
+    fclose(fp);
 }
-void bit1(int b){
-    if (b==1){
-        printf("the function 1 is called!\n");
+void print_float_binary(float num) {
+    uint32_t *ptr = (uint32_t*)&num; 
+    uint32_t bits = *ptr;  
+    for (int i = 31; i >= 0; i--) {
+        printf("%d", (bits >> i) & 1);  
     }
-}
-void bit2(int b){
-    if (b==1){
-        printf("the function 2 is called!\n");
-    }
-}
-void bit3(int b){
-if (b==1){
-        printf("the function 3 is called!\n");
-    }
-}
-void bit4(int b){
-    if (b==1){
-        printf("the function 4 is called!\n");
-    }
-}
-void bit5(int b){
-    if (b==1){
-        printf("the function 5 is called!\n");
-    }
-}
-void bit6(int b){
-    if (b==1){
-        printf("the function 6 is called!\n");
-    }
-}
-void bit7(int b){
-    if (b==1){
-        printf("the function 7 is called!\n");
-    }
+    printf("\n");
 }
