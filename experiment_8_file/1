@@ -1,36 +1,19 @@
 #include<stdio.h>
-char u[]="UVWXYZ",v[]="xyz";
-struct T{
-    int x;
-    char c;
-    char *t;
-}a[]={{1,'A',u},{100,'B',v}},*p=a;
-int main()
+#include<stdlib.h>
+int main(int argc, char* argv[])
 {
-    int choice;
-    scanf("%d",&choice);
-    switch(choice){
-        case 1:
-            printf("%d",(++p)->x);//100
-            break;
-        case 2:
-            p++;
-            printf("%c",p->c);//B
-            break;
-        case 3:            
-            // printf("%c",*p++->t);//最后做++吗
-            p++;
-            printf("%c",*p->t);
-            break;
-        case 4:
-            printf("%c",*(++p)->t);
-            break;
-        case 5:
-            printf("%c",*++p->t);
-            break;
-        case 6:
-            printf("%c",++*p->t);
-            break;
-    }
-    return 0;
+	FILE * fp;
+	if(argc!=2){
+		printf("Arguments error!\n");
+		exit(-1);
+	}
+	if((fp=fopen(argv[1],"r"))==NULL){      /* fp指向filename */
+		printf("Can't open %s file!\n", argv[1]);
+		exit(-1);
+	}
+    char ch;
+	while((ch=fgetc(fp))!=EOF)             
+		putchar(ch);            /* 向显示器中写从filename中读取的字符 */ 
+	    fclose(fp);                        /* 关闭filename */ 
+	return 0;
 }
