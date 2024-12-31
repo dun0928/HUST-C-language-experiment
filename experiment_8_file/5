@@ -1,0 +1,122 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+typedef struct stu{
+    char id_card[15];
+    char name[10];
+    int grades_english;
+    int grades_math;
+    int grades_physics;
+    int grades_c;
+    struct stu *next;
+} student; 
+void input(student **head,student **tail);
+void output(student *head);
+void modify(student *head);
+void average(student *head);
+void print(student *head);
+int main(){
+    int choice;
+    scanf("%d",&choice);
+    student *head=NULL;
+    student *tail=NULL;
+    while(choice!=0){
+        switch (choice){
+            case 0:
+                return 0;
+            case 1:
+                input(&head,&tail);
+                break;
+            case 2:
+                output(head);
+                break;
+            case 3:
+                modify(head);
+                break;
+            case 4:
+                average(head);
+                break;
+            case 5:
+                print(head);
+                break;
+        }
+        scanf("%d",&choice);
+    }
+}
+void input(student **head,student **tail){
+    int number;
+    scanf("%d",&number);
+    for(int i=0;i<number;i++){
+        student *p=(student *)malloc(sizeof(student));
+        p->next=NULL;
+        scanf("%s",p->id_card);
+        scanf("%s",p->name);
+        scanf("%d",&p->grades_english);
+        scanf("%d",&p->grades_math);
+        scanf("%d",&p->grades_physics);
+        scanf("%d",&p->grades_c);
+        if(*head==NULL){
+            *head=p;
+            *tail=p;
+        }else{
+            (*tail)->next=p;
+            *tail=p;
+        }
+    }
+}
+void output(student *head){
+    while(head!=NULL){
+        printf("%s %s %d %d %d %d\n",head->id_card,head->name,head->grades_english,head->grades_math,head->grades_physics,head->grades_c);
+        head=head->next;
+    }
+}
+void modify(student *head){
+    char card[15];
+    scanf("%s",card);
+    while(head!=NULL){
+        if(strcmp(head->id_card,card)==0){
+            int choice;
+            scanf("%d",&choice);
+            switch (choice){
+                case 1:
+                    scanf("%d",&head->grades_english);
+                    return;
+                    break;
+                case 2:
+                    scanf("%d",&head->grades_math);
+                    return;
+                    break;
+                case 3:
+                    scanf("%d",&head->grades_physics);
+                    return;
+                    break;
+                case 4:
+                    scanf("%d",&head->grades_c);
+                    return ;
+                    break;
+            }
+            
+        }
+        else{
+            head=head->next;
+        }
+    }
+}
+void average(student *head){
+    double average_grade=0;
+    while(head!=NULL){
+        average_grade=(head->grades_english+head->grades_math+head->grades_physics+head->grades_c)/4.0;
+        printf("%s %s %.2f\n",head->id_card,head->name,average_grade);
+        head=head->next;
+    }
+}
+void print(student *head){
+    int sum;
+    double average_grade;
+    while(head!=NULL){
+        sum=head->grades_english+head->grades_math+head->grades_physics+head->grades_c;
+        average_grade=sum/4.0;
+        printf("%s %s %d %.2f\n",head->id_card,head->name,sum,average_grade);
+        head=head->next;
+    }
+}
