@@ -1,0 +1,62 @@
+#include <stdio.h>
+int main(){
+     int m[100]={0};
+     int n[100]={0};
+     int i=0;
+     int b=0;
+     int ch;
+     for(;(ch=getchar())>='0'&&ch<='9'&&ch!='\n'&&ch!=EOF;i++){
+         m[i]=ch-48;
+     }
+    int j=0;
+    int k=0;
+    for(j=0,k=i-1;k>j;j++,k--){
+        int temp=m[k];
+        m[k]=m[j];
+        m[j]=temp;
+    }
+    for(;(ch=getchar())>='0'&&ch<='9'&&ch!='\n'&&ch!=EOF;b++){
+         n[b]=ch-48;
+     }
+    for(j=0,k=b-1;k>j;j++,k--){
+        int temp=n[k];
+        n[k]=n[j];
+        n[j]=temp;
+    }
+    // for(j=0;j<i;j++){
+    //     printf("%d",m[j]);
+    // }
+    j=0;
+    k=0;
+    int result[1000]={0};
+    int a=0;
+  
+    for(j=0;j<i;j++){
+        for(k=0;k<b;k++){
+            a=m[j]*n[k];
+            if(a>=10){
+                result[j+k]=result[j+k]+a%10;
+                result[j+k+1]=result[j+k+1]+a/10;
+            }
+            else{
+                result[j+k]=result[j+k]+a;
+            }
+            if(result[j+k]>=10){
+                result[j+k+1]=result[j+k+1]+result[j+k]/10;
+                result[j+k]=result[j+k]%10;
+            }
+        }
+    }
+    for(i=j+k;i>=0;){
+        if(result[i]==0){
+            i--;
+        }
+        else{
+            break;
+        }
+    }
+    for(i=i;i>=0;i--){
+        printf("%d",result[i]);
+    }
+    return 0;
+}
