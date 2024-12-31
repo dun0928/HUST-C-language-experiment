@@ -1,1 +1,35 @@
-
+///#include<stdio.h>
+char del;
+void strcate(char a[],char b[]);
+void strdelc(char a[],char del);
+int main(void){
+    char a[100];
+    char b[100];  
+    scanf("%s",a);
+    scanf("%s",b);
+    getchar();
+    scanf("%c",&del);
+    strcate(a,b);
+    return 0;
+}
+void strcate(char a[],char b[]){
+    int i=0,j=0;
+    while(a[i]!='\0'){
+        i++;
+    }
+    while(b[j]!='\0'){
+        a[i]=b[j];
+        i++;
+        j++;
+    }
+    a[i]='\0';
+    printf("%s\n",a);
+    strdelc(a,del);
+}
+void strdelc(char a[],char del){
+    for(int i=0;a[i]!='\0';i++){
+        if(a[i]!=del){
+            printf("%c",a[i]);
+        }
+    }
+}
